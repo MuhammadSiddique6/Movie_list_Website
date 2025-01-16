@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Movies</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body class="bg-[url('/public/background.jpg')] bg-cover" onload="divs()">
+    <nav class=" bg-[#2BD17E] h-10">
+        <ul class="flex flex-row justify-between mx-10 p-1">
+            <div class="flex flex-row space-x-10 text-white font-medium">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#news">News</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#about">About</a></li>
+            </div>
+            <div class="h-10">
+                <div class="dropdown">
+                    <a class="btn dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-regular fa-user text-white"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="Welcome.html">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </ul>
+    </nav>
+    <div class="flex flex-col h-full"> 
+        <div class="text-white flex justify-between mx-[120px] h-16 mt-10">
+            <p class="text-3xl">My movies <a href="newmovie.html"><i class="fa-solid fa-circle-plus text-lg"></i></a></p>
+            <button onclick="deletee()"><i class="fa-solid fa-trash"></i> Delete All</button>
+        </div>
+        <br>
+        <div id="main" class="flex flex-row flex-wrap mx-[120px] gap-6">
+        </div>
+    </div>
+</body>
+<script>
+    let count = 0;
+    function divs() {
+    let i = count;
+    count = count + 1;
+    console.log(count);
+    const allKeys = Object.keys(localStorage);
+    for (; i < allKeys.length; i++) {
+        let key = allKeys[i];
+        console.log(key);
+        let data = JSON.parse(localStorage.getItem(key));
+
+        const container = document.createElement("div");
+        container.className = "bg-[#092C39] h-96 w-[257px] p-2 rounded-lg";
+
+        const images = document.createElement("img");
+        images.src = data.images;
+        images.className = "h-72 rounded-lg";
+
+        const title = document.createElement("strong");
+        title.className = "block text-white mt-1";
+        title.textContent = data.title;
+
+        const year = document.createElement("small");
+        year.className = "block text-white mt-1";
+        year.textContent = data.year;
+
+        const edit = document.createElement("button");
+        edit.className = "bg-blue-500 rounded-md text-white px-2 py-1 mr-2 w-16 mt-1";
+        edit.textContent = "Edit";
+        edit.addEventListener('click', () => {
+            window.location.href = `edit.html?key=${key}`;
+        });
+
+        const del = document.createElement("button");
+        del.className = "bg-red-500 rounded-md text-white px-2 py-1 mr-2 w-16";
+        del.textContent = "Delete";
+        del.addEventListener('click', () => {
+            localStorage.removeItem(key); 
+            container.remove();
+        });
+
+        const view = document.createElement("button");
+        view.className = "bg-green-500 rounded-md text-white px-2 py-1 w-16 ";
+        view.textContent = "View";
+        view.addEventListener('click', () => {
+            window.location.href = `view.html?key=${key}`;
+        });
+
+        container.appendChild(images);
+        container.appendChild(title);
+        container.appendChild(year);
+        container.appendChild(edit);
+        container.appendChild(del);
+        container.appendChild(view);
+
+        document.getElementById('main').appendChild(container);
+        }
+    }
+    function deletee(){
+        localStorage.clear();
+    }
+</script>
+</html>

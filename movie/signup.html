@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[url('/public/background1.jpg')]">
+    <form action="#" id="signupForm" class="ml-1/2 flex flex-col gap-y-5 w-[300px] m-auto mt-14">
+        <p class="text-white text-[64px] font-medium m-auto ">Sign Up</p>
+        <input type="text" placeholder="Username" class="bg-[#224957] p-2 rounded-lg text-white h-[45px] outline-none" required>
+        <input type="email" placeholder="Email" id="email" class="bg-[#224957] p-2 rounded-lg text-white h-[45px] outline-none" required>
+        <input type="password" placeholder="Password" id="password" class="bg-[#224957] p-2 rounded-lg text-white h-[45px] outline-none" required>
+        <input type="password" placeholder="Confirm Password" id="confirmPassword" class="bg-[#224957] p-2 rounded-lg text-white h-[45px] outline-none" required>
+        <button type="button" class="bg-[#2BD17E] p-3 rounded-lg text-white h-14 mt-2" onclick="validateForm()">Submit</button>
+        <p class="ml-7 text-white">Already have an account? <a href="login.html" class="text-[#2BD17E] font-semibold">Sign In</a></p>
+    </form>
+    <p id="errorMessage" class="text-red-500 font-bold text-center mt-4"></p>
+    <p id="successfully" class="text-green-500 font-bold text-center mt-4"></p>
+</body>
+<script>
+    const valid_password = (password) => {
+        if (password.length < 8) return "Password must be at least 8 characters long.";
+        if (!/[a-z]/.test(password)) return "Password must include at least one lowercase letter.";
+        if (!/[A-Z]/.test(password)) return "Password must include at least one uppercase letter.";
+        if (!/[0-9]/.test(password)) return "Password must include at least one number.";
+        if (!/[^a-zA-Z0-9]/.test(password)) return "Password must include at least one special character.";
+        return ""; 
+    };
+    
+    const validateForm = () => {
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        const confirmPassword = document.getElementById("confirmPassword").value;
+        const errorMessage = document.getElementById("errorMessage");
+        let data; 
+        errorMessage.textContent = "";
+        successfully.textContent = "";
+        
+        const passwordError = valid_password(password);
+        if (passwordError) {
+            errorMessage.textContent = passwordError;
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            errorMessage.textContent = "Passwords do not match.";
+            return;
+            
+        }
+        function mydata(email,password) {
+        this.email = email;
+        this.password = password;  
+        }
+        if (password == confirmPassword) {
+            data =new mydata(email,password);
+            console.log(data);
+            const key = new Date().getTime();
+            const myjson = JSON.stringify(data);
+
+            localStorage.setItem(key, myjson);
+
+            successfully.textContent = "Form submitted successfully!";
+            return;
+            
+        }
+        
+    };
+</script>
+</html>

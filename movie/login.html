@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[url('/public/background1.jpg')]">
+    <form action="#" class="ml-1/2 flex flex-col gap-y-5 w-[300px] m-auto mt-32" onsubmit="return decideNextPage(event)">
+        <p class="text-white text-[64px] font-medium m-auto">Login</p>
+        <input type="email" placeholder="Email" class="bg-[#224957] p-2 rounded-lg text-white h-[45px] outline-none" required>
+        <input type="password" placeholder="Password" class="bg-[#224957] p-2 rounded-lg text-white h-[45px] outline-none" required>
+        <div class="flex flex-row gap-1 justify-center">
+            <input type="checkbox" id="remember" class="bg-[#224957]">
+            <label for="remember" class="text-white">Remember me</label>
+        </div>
+        <input type="submit" value="Submit" class="bg-[#2BD17E] p-3 rounded-lg text-white h-14">
+    </form>
+</body>
+<script>
+    function decideNextPage(event) {
+        event.preventDefault();
+        
+        try {
+            if (localStorage && localStorage.length > 0) {
+                window.location.href = 'mymovie.html';
+            } else {
+                window.location.href = 'movielist.html';
+            }
+        } catch (e) {
+            console.error("localStorage error:", e);
+            window.location.href = 'movielist.html';
+        }
+
+        return false;
+    }
+</script>
+</html>
